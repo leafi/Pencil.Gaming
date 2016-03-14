@@ -80,9 +80,17 @@ namespace Pencil.Gaming {
 		internal static extern void glfwGetWindowSize(GlfwWindowPtr window, out int width, out int height);
 		[DllImport("natives64/glfw.dll"), SuppressUnmanagedCodeSecurity] 
 		internal static extern void glfwSetWindowSize(GlfwWindowPtr window, int width, int height);
-		[DllImport("natives64/glfw.dll"), SuppressUnmanagedCodeSecurity] 
+		[DllImport("natives64/glfw.dll"), SuppressUnmanagedCodeSecurity]
+		internal static extern void glfwSetWindowAspectRatio(GlfwWindowPtr window, int numer, int denom);
+		[DllImport("natives64/glfw.dll"), SuppressUnmanagedCodeSecurity]
+		internal static extern void glfwSetWindowSizeLimits(GlfwWindowPtr window, int minwidth, int minheight, int maxwidth, int maxheight);
+		[DllImport("natives64/glfw.dll"), SuppressUnmanagedCodeSecurity]
+		internal static extern void glfwFocusWindow(GlfwWindowPtr window);
+		[DllImport("natives64/glfw.dll"), SuppressUnmanagedCodeSecurity]
 		internal static extern void glfwIconifyWindow(GlfwWindowPtr window);
-		[DllImport("natives64/glfw.dll"), SuppressUnmanagedCodeSecurity] 
+		[DllImport("natives64/glfw.dll"), SuppressUnmanagedCodeSecurity]
+		internal static extern void glfwMaximizeWindow(GlfwWindowPtr window);
+		[DllImport("natives64/glfw.dll"), SuppressUnmanagedCodeSecurity]
 		internal static extern void glfwRestoreWindow(GlfwWindowPtr window);
 		[DllImport("natives64/glfw.dll"), SuppressUnmanagedCodeSecurity] 
 		internal static extern void glfwShowWindow(GlfwWindowPtr window);
@@ -92,7 +100,9 @@ namespace Pencil.Gaming {
 		internal static extern GlfwMonitorPtr glfwGetWindowMonitor(GlfwWindowPtr window);
 		[DllImport("natives64/glfw.dll"), SuppressUnmanagedCodeSecurity] 
 		internal static extern int glfwGetWindowAttrib(GlfwWindowPtr window, int param);
-		[DllImport("natives64/glfw.dll"), SuppressUnmanagedCodeSecurity] 
+		[DllImport("natives64/glfw.dll"), SuppressUnmanagedCodeSecurity]
+		internal static extern int glfwGetWindowFrameSize(GlfwWindowPtr window, out int left, out int top, out int right, out int bottom);
+		[DllImport("natives64/glfw.dll"), SuppressUnmanagedCodeSecurity]
 		internal static extern void glfwSetWindowUserPointer(GlfwWindowPtr window, IntPtr pointer);
 		[DllImport("natives64/glfw.dll"), SuppressUnmanagedCodeSecurity] 
 		internal static extern IntPtr glfwGetWindowUserPointer(GlfwWindowPtr window);
@@ -112,13 +122,20 @@ namespace Pencil.Gaming {
 		internal static extern void glfwPollEvents();
 		[DllImport("natives64/glfw.dll"), SuppressUnmanagedCodeSecurity] 
 		internal static extern void glfwWaitEvents();
-		[DllImport("natives64/glfw.dll"), SuppressUnmanagedCodeSecurity] 
+		[DllImport("natives64/glfw.dll"), SuppressUnmanagedCodeSecurity]
+		internal static extern void glfwWaitEventsTimeout(double timeout);
+		[DllImport("natives64/glfw.dll"), SuppressUnmanagedCodeSecurity]
+		internal static extern void glfwPostEmptyEvent();
+		[DllImport("natives64/glfw.dll"), SuppressUnmanagedCodeSecurity]
 		internal static extern int glfwGetInputMode(GlfwWindowPtr window, InputMode mode);
 		[DllImport("natives64/glfw.dll"), SuppressUnmanagedCodeSecurity] 
 		internal static extern void glfwSetInputMode(GlfwWindowPtr window, InputMode mode, CursorMode value);
 		[DllImport("natives64/glfw.dll"), SuppressUnmanagedCodeSecurity] 
 		internal static extern int glfwGetKey(GlfwWindowPtr window, Key key);
-		[DllImport("natives64/glfw.dll"), SuppressUnmanagedCodeSecurity] 
+		[DllImport("natives64/glfw.dll"), SuppressUnmanagedCodeSecurity]
+		[return: MarshalAs(UnmanagedType.LPStr)]
+		internal static extern string glfwGetKeyName(Key key, int scancode);
+		[DllImport("natives64/glfw.dll"), SuppressUnmanagedCodeSecurity]
 		internal static extern int glfwGetMouseButton(GlfwWindowPtr window, MouseButton button);
 		[DllImport("natives64/glfw.dll"), SuppressUnmanagedCodeSecurity] 
 		internal static extern void glfwGetCursorPos(GlfwWindowPtr window, out double xpos, out double ypos);
@@ -128,6 +145,10 @@ namespace Pencil.Gaming {
 		internal static extern GlfwKeyFun glfwSetKeyCallback(GlfwWindowPtr window, GlfwKeyFun cbfun);
 		[DllImport("natives64/glfw.dll"), SuppressUnmanagedCodeSecurity]
 		internal static extern GlfwCharFun glfwSetCharCallback(GlfwWindowPtr window, GlfwCharFun cbfun);
+		[DllImport("natives64/glfw.dll"), SuppressUnmanagedCodeSecurity]
+		internal static extern GlfwCharModsFun glfwSetCharModsCallback(GlfwWindowPtr window, GlfwCharFun cbfun);
+		[DllImport("natives64/glfw.dll"), SuppressUnmanagedCodeSecurity]
+		internal static extern GlfwDropFun glfwSetDropCallback(GlfwWindowPtr, GlfwDropFun cbfun);
 		[DllImport("natives64/glfw.dll"), SuppressUnmanagedCodeSecurity]
 		internal static extern GlfwMouseButtonFun glfwSetMouseButtonCallback(GlfwWindowPtr window, GlfwMouseButtonFun cbfun);
 		[DllImport("natives64/glfw.dll"), SuppressUnmanagedCodeSecurity]
@@ -150,7 +171,11 @@ namespace Pencil.Gaming {
 		internal static extern sbyte * glfwGetClipboardString(GlfwWindowPtr window);
 		[DllImport("natives64/glfw.dll"), SuppressUnmanagedCodeSecurity] 
 		internal static extern double glfwGetTime();
-		[DllImport("natives64/glfw.dll"), SuppressUnmanagedCodeSecurity] 
+		[DllImport("natives64/glfw.dll"), SuppressUnmanagedCodeSecurity]
+		internal static extern ulong glfwGetTimerFrequency();
+		[DllImport("natives64/glfw.dll"), SuppressUnmanagedCodeSecurity]
+		internal static extern ulong glfwGetTimerValue();
+		[DllImport("natives64/glfw.dll"), SuppressUnmanagedCodeSecurity]
 		internal static extern void glfwSetTime(double time);
 		[DllImport("natives64/glfw.dll"), SuppressUnmanagedCodeSecurity] 
 		internal static extern void glfwMakeContextCurrent(GlfwWindowPtr window);
@@ -169,6 +194,17 @@ namespace Pencil.Gaming {
 		internal static extern void glfwGetFramebufferSize(GlfwWindowPtr window, out int width, out int height);
 		[DllImport("natives64/glfw.dll"), SuppressUnmanagedCodeSecurity]
 		internal static extern GlfwFramebufferSizeFun glfwSetFramebufferSizeCallback(GlfwWindowPtr window, GlfwFramebufferSizeFun cbfun);
+
+		[DllImport("natives64/glfw.dll"), SuppressUnmanagedCodeSecurity]
+		internal static extern int glfwCreateWindowSurface(IntPtr vkInstancePtr, GlfwWindowPtr window, IntPtr allocatorOrZero, IntPtr vkSurfaceKHRPtrPtr);
+		[DllImport("natives64/glfw.dll"), SuppressUnmanagedCodeSecurity]
+		internal static extern GlfwVulkanProcPtr glfwGetInstanceProcAddress(IntPtr vkInstancePtr, [MarshalAs(UnmanagedType.LPStr)] string procname);
+		[DllImport("natives64/glfw.dll"), SuppressUnmanagedCodeSecurity]
+		internal static extern int glfwGetPhysicalDevicePresentationSupport(IntPtr vkInstancePtr, IntPtr vkPhysicalDevicePtr, uint queuefamily);
+		[DllImport("natives64/glfw.dll"), SuppressUnmanagedCodeSecurity]
+		internal static extern byte** glfwGetRequiredInstanceExtensions(out uint count);
+		[DllImport("natives64/glfw.dll"), SuppressUnmanagedCodeSecurity]
+		internal static extern int glfwVulkanSupported();
 	}
 }
 

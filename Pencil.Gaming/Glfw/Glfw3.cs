@@ -23,6 +23,7 @@
 
 #if USE_GLFW3
 using System;
+using System.Runtime.InteropServices;
 
 namespace Pencil.Gaming {
 	public static unsafe class Glfw {
@@ -148,8 +149,20 @@ namespace Pencil.Gaming {
 		public static void SetWindowSize(GlfwWindowPtr window, int width, int height) {
 			GlfwDelegates.glfwSetWindowSize(window, width, height);
 		}
+		public static void SetWindowAspectRatio(GlfwWindowPtr window, int numer, int denom) {
+			GlfwDelegates.glfwSetWindowAspectRatio(window, numer, denom);
+		}
+		public static void SetWindowSizeLimits(GlfwWindowPtr window, int minwidth, int minheight, int maxwidth, int maxheight) {
+			GlfwDelegates.glfwSetWindowSizeLimits(window, minwidth, minheight, maxwidth, maxheight);
+		}
+		public static void FocusWindow(GlfwWindowPtr window) {
+			GlfwDelegates.glfwFocusWindow(window);
+		}
 		public static void IconifyWindow(GlfwWindowPtr window) {
 			GlfwDelegates.glfwIconifyWindow(window);
+		}
+		public static void MaximizeWindow(GlfwWindowPtr window) {
+			GlfwDelegates.glfwMaximizeWindow(window);
 		}
 		public static void RestoreWindow(GlfwWindowPtr window) {
 			GlfwDelegates.glfwRestoreWindow(window);
@@ -168,6 +181,9 @@ namespace Pencil.Gaming {
 		}
 		public static int GetWindowAttrib(GlfwWindowPtr window, WindowHint param) {
 			return GlfwDelegates.glfwGetWindowAttrib(window, (int)param);
+		}
+		public static void GetWindowFrameSize(GlfwWindowPtr window, out int left, out int top, out int right, out int bottom) {
+			return GlfwDelegates.glfwGetWindowFrameSize(window, out left, out top, out right, out bottom);
 		}
 		public static void SetWindowUserPointer(GlfwWindowPtr window, IntPtr pointer) {
 			GlfwDelegates.glfwSetWindowUserPointer(window, pointer);
@@ -216,6 +232,12 @@ namespace Pencil.Gaming {
 		public static void WaitEvents() {
 			GlfwDelegates.glfwWaitEvents();
 		}
+		public static void WaitEventsTimeout(double timeout) {
+			GlfwDelegates.glfwWaitEventsTimeout(timeout);
+		}
+		public static void PostEmptyEvent() {
+			GlfwDelegates.glfwPostEmptyEvent();
+		}
 		public static int GetInputMode(GlfwWindowPtr window, InputMode mode) {
 			return GlfwDelegates.glfwGetInputMode(window, mode);
 		}
@@ -224,6 +246,9 @@ namespace Pencil.Gaming {
 		}
 		public static bool GetKey(GlfwWindowPtr window, Key key) {
 			return GlfwDelegates.glfwGetKey(window, key) != 0;
+		}
+		public static string GetKeyName(Key key, int scancode) {
+			return GlfwDelegates.glfwGetKeyName(key, scancode);
 		}
 		public static bool GetMouseButton(GlfwWindowPtr window, MouseButton button) {
 			return GlfwDelegates.glfwGetMouseButton(window, button) != 0;
@@ -243,6 +268,16 @@ namespace Pencil.Gaming {
 		public static GlfwCharFun SetCharCallback(GlfwWindowPtr window, GlfwCharFun cbfun) {
 			charFun = cbfun;
 			return GlfwDelegates.glfwSetCharCallback(window, cbfun);
+		}
+		private static GlfwCharModsFun charModsFun;
+		public static GlfwCharModsFun SetCharModsCallback(GlfwWindowPtr window, GlfwCharModsFun cbfun) {
+			charModsFun = cbfun;
+			return GlfwDelegates.glfwSetCharModsCallback(window, cbfun);
+		}
+		private static GlfwDropFun dropFun;
+		public static GlfwDropFun SetDropCallback(GlfwWindowPtr window, GlfwDropFun cbfun) {
+			dropFun = cbfun;
+			return GlfwDelegates.glfwSetDropCallback(window, cbfun);
 		}
 		private static GlfwMouseButtonFun mouseButtonFun;
 		public static GlfwMouseButtonFun SetMouseButtonCallback(GlfwWindowPtr window, GlfwMouseButtonFun cbfun) {
@@ -297,6 +332,12 @@ namespace Pencil.Gaming {
 		public static double GetTime() {
 			return GlfwDelegates.glfwGetTime();
 		}
+		public static ulong GetTimerFrequency() {
+			return GlfwDelegates.glfwGetTimerFrequency();
+		}
+		public static ulong GetTimerValue() {
+			return GlfwDelegates.glfwGetTimerValue();
+		}
 		public static void SetTime(double time) {
 			GlfwDelegates.glfwSetTime(time);
 		}
@@ -317,6 +358,32 @@ namespace Pencil.Gaming {
 		}
 		public static IntPtr GetProcAddress(string procname) {
 			return GlfwDelegates.glfwGetProcAddress(procname);
+		}
+
+		public static int CreateWindowSurface(IntPtr vkInstancePtr, GlfwWindowPtr window, IntPtr vkAllocatorOrZero, IntPtr vkSurfaceKHRPtrPtr) {
+			return GlfwDelegates.CreateWindowSurface(vkInstancePtr, window, vkAllocatorOrZero, vkSurfaceKHRPtrPtr);
+		}
+		public static GlfwVulkanProcPtr GetInstanceProcAddress(IntPtr vkInstancePtr, string procname) {
+			return GlfwDelegates.GetInstanceProcAddress(vkInstancePtr, procname);
+		}
+		public static bool GetPhysicalDevicePresentationSupport(IntPtr vkInstancePtr, IntPtr vkPhysicalDevicePtr, uint queuefamily) {
+			return GlfwDelegates.glfwGetPhysicalDevicePresentationSupport(vkInstancePtr, vkPhysicalDevicePtr, queuefamily) == 1;
+		}
+		public static string[] GetRequiredInstanceExtensions() {
+			uint count;
+			byte** arr = GlfwDelegates.glfwGetRequiredInstanceExtensions(out count);
+			if (arr == 0) {
+				return null;
+			}
+			string[] exts = new string[count];
+			for (long i = 0; i < count; i++) {
+				exts[i] = Marshal.PtrToStringAnsi((void*)(*arr));
+				arr++;
+			}
+			return exts;
+		}
+		public static bool VulkanSupported() {
+			return GlfwDelegates.glfwVulkanSupported() == 1;
 		}
 
 		#pragma warning restore 0414

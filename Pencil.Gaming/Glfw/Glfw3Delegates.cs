@@ -106,7 +106,15 @@ namespace Pencil.Gaming {
 		[SuppressUnmanagedCodeSecurity]
 		internal delegate void SetWindowSize(GlfwWindowPtr window,int width,int height);
 		[SuppressUnmanagedCodeSecurity]
+		internal delegate void SetWindowAspectRatio(GlfwWindowPtr window,int numer,int denom);
+		[SuppressUnmanagedCodeSecurity]
+		internal delegate void SetWindowSizeLimits(GlfwWindowPtr window,int minwidth,int minheight,int maxwidth,int maxheight);
+		[SuppressUnmanagedCodeSecurity]
+		internal delegate void FocusWindow(GlfwWindowPtr window);
+		[SuppressUnmanagedCodeSecurity]
 		internal delegate void IconifyWindow(GlfwWindowPtr window);
+		[SuppressUnmanagedCodeSecurity]
+		internal delegate void MaximizeWindow(GlfwWindowPtr window);
 		[SuppressUnmanagedCodeSecurity]
 		internal delegate void RestoreWindow(GlfwWindowPtr window);
 		[SuppressUnmanagedCodeSecurity]
@@ -117,6 +125,8 @@ namespace Pencil.Gaming {
 		internal delegate GlfwMonitorPtr GetWindowMonitor(GlfwWindowPtr window);
 		[SuppressUnmanagedCodeSecurity]
 		internal delegate int GetWindowAttrib(GlfwWindowPtr window,int param);
+		[SuppressUnmanagedCodeSecurity]
+		internal delegate void GetWindowFrameSize(GlfwWindowPtr window,out int left,out int top,out int bottom);
 		[SuppressUnmanagedCodeSecurity]
 		internal delegate void SetWindowUserPointer(GlfwWindowPtr window,IntPtr pointer);
 		[SuppressUnmanagedCodeSecurity]
@@ -138,11 +148,18 @@ namespace Pencil.Gaming {
 		[SuppressUnmanagedCodeSecurity]
 		internal delegate void WaitEvents();
 		[SuppressUnmanagedCodeSecurity]
+		internal delegate void WaitEventsTimeout(double timeout);
+		[SuppressUnmanagedCodeSecurity]
+		internal delegate void PostEmptyEvent();
+		[SuppressUnmanagedCodeSecurity]
 		internal delegate int GetInputMode(GlfwWindowPtr window,InputMode mode);
 		[SuppressUnmanagedCodeSecurity]
 		internal delegate void SetInputMode(GlfwWindowPtr window,InputMode mode,CursorMode value);
 		[SuppressUnmanagedCodeSecurity]
 		internal delegate int GetKey(GlfwWindowPtr window,Key key);
+		[SuppressUnmanagedCodeSecurity]
+		[return: MarshalAs(UnmanagedType.LPStr)]
+		internal delegate string GetKeyName(Key key,int scancode);
 		[SuppressUnmanagedCodeSecurity]
 		internal delegate int GetMouseButton(GlfwWindowPtr window,MouseButton button);
 		[SuppressUnmanagedCodeSecurity]
@@ -154,11 +171,15 @@ namespace Pencil.Gaming {
 		[SuppressUnmanagedCodeSecurity]
 		internal delegate GlfwCharFun SetCharCallback(GlfwWindowPtr window, GlfwCharFun cbfun);
 		[SuppressUnmanagedCodeSecurity]
+		internal delegate GlfwCharModsFun SetCharModsCallback(GlfwWindowPtr window, GlfwCharModsFun cbfun);
+		[SuppressUnmanagedCodeSecurity]
 		internal delegate GlfwMouseButtonFun SetMouseButtonCallback(GlfwWindowPtr window, GlfwMouseButtonFun cbfun);
 		[SuppressUnmanagedCodeSecurity]
 		internal delegate GlfwCursorPosFun SetCursorPosCallback(GlfwWindowPtr window, GlfwCursorPosFun cbfun);
 		[SuppressUnmanagedCodeSecurity]
 		internal delegate GlfwCursorEnterFun SetCursorEnterCallback(GlfwWindowPtr window, GlfwCursorEnterFun cbfun);
+		[SuppressUnmanagedCodeSecurity]
+		internal delegate GlfwDropFun SetDropCallback(GlfwWindowPtr window, GlfwDropFun cbfun);
 		[SuppressUnmanagedCodeSecurity]
 		internal delegate GlfwScrollFun SetScrollCallback(GlfwWindowPtr window, GlfwScrollFun cbfun);
 		[SuppressUnmanagedCodeSecurity]
@@ -175,6 +196,10 @@ namespace Pencil.Gaming {
 		internal delegate sbyte * GetClipboardString(GlfwWindowPtr window);
 		[SuppressUnmanagedCodeSecurity]
 		internal delegate double GetTime();
+		[SuppressUnmanagedCodeSecurity]
+		internal delegate ulong GetTimerFrequency();
+		[SuppressUnmanagedCodeSecurity]
+		internal delegate ulong GetTimerValue();
 		[SuppressUnmanagedCodeSecurity]
 		internal delegate void SetTime(double time);
 		[SuppressUnmanagedCodeSecurity]
@@ -193,6 +218,16 @@ namespace Pencil.Gaming {
 		internal delegate void GetFramebufferSize(GlfwWindowPtr window, out int width, out int height);
 		[SuppressUnmanagedCodeSecurity]
 		internal delegate GlfwFramebufferSizeFun SetFramebufferSizeCallback(GlfwWindowPtr window,GlfwFramebufferSizeFun cbfun);
+		[SuppressUnmanagedCodeSecurity]
+		internal delegate int CreateWindowSurface(IntPtr vkInstancePtr, GlfwWindowPtr window, IntPtr allocatorOrZero, IntPtr vkSurfaceKHRPtrPtr);
+		[SuppressUnmanagedCodeSecurity]
+		internal delegate GlfwVulkanProcPtr GetInstanceProcAddress(IntPtr vkInstancePtr, [MarshalAs(UnmanagedType.LPStr)] string procname);
+		[SuppressUnmanagedCodeSecurity]
+		internal delegate int GetPhysicalDevicePresentationSupport(IntPtr vkInstancePtr, IntPtr vkPhysicalDevicePtr, uint queuefamily);
+		[SuppressUnmanagedCodeSecurity]
+		internal delegate byte** GetRequiredInstanceExtensions(out uint count);
+		[SuppressUnmanagedCodeSecurity]
+		internal delegate int VulkanSupported();
 
 		internal static Init glfwInit;
 		internal static Terminate glfwTerminate;
@@ -220,12 +255,17 @@ namespace Pencil.Gaming {
 		internal static SetWindowPos glfwSetWindowPos;
 		internal static GetWindowSize glfwGetWindowSize;
 		internal static SetWindowSize glfwSetWindowSize;
+		internal static SetWindowAspectRatio glfwSetWindowAspectRatio;
+		internal static SetWindowSizeLimits glfwSetWindowSizeLimits;
+		internal static FocusWindow glfwFocusWindow;
 		internal static IconifyWindow glfwIconifyWindow;
+		internal static MaximizeWindow glfwMaximizeWindow;
 		internal static RestoreWindow glfwRestoreWindow;
 		internal static ShowWindow glfwShowWindow;
 		internal static HideWindow glfwHideWindow;
 		internal static GetWindowMonitor glfwGetWindowMonitor;
 		internal static GetWindowAttrib glfwGetWindowAttrib;
+		internal static GetWindowFrameSize glfwGetWindowFrameSize;
 		internal static SetWindowUserPointer glfwSetWindowUserPointer;
 		internal static GetWindowUserPointer glfwGetWindowUserPointer;
 		internal static SetWindowPosCallback glfwSetWindowPosCallback;
@@ -236,17 +276,22 @@ namespace Pencil.Gaming {
 		internal static SetWindowIconifyCallback glfwSetWindowIconifyCallback;
 		internal static PollEvents glfwPollEvents;
 		internal static WaitEvents glfwWaitEvents;
+		internal static WaitEventsTimeout glfwWaitEventsTimeout;
+		internal static PostEmptyEvent glfwPostEmptyEvent;
 		internal static GetInputMode glfwGetInputMode;
 		internal static SetInputMode glfwSetInputMode;
 		internal static GetKey glfwGetKey;
+		internal static GetKeyName glfwGetKeyName;
 		internal static GetMouseButton glfwGetMouseButton;
 		internal static GetCursorPos glfwGetCursorPos;
 		internal static SetCursorPos glfwSetCursorPos;
 		internal static SetKeyCallback glfwSetKeyCallback;
 		internal static SetCharCallback glfwSetCharCallback;
+		internal static SetCharModsCallback glfwSetCharModsCallback;
 		internal static SetMouseButtonCallback glfwSetMouseButtonCallback;
 		internal static SetCursorPosCallback glfwSetCursorPosCallback;
 		internal static SetCursorEnterCallback glfwSetCursorEnterCallback;
+		internal static SetDropCallback glfwSetDropCallback;
 		internal static SetScrollCallback glfwSetScrollCallback;
 		internal static JoystickPresent glfwJoystickPresent;
 		internal static GetJoystickAxes glfwGetJoystickAxes;
@@ -255,6 +300,8 @@ namespace Pencil.Gaming {
 		internal static SetClipboardString glfwSetClipboardString;
 		internal static GetClipboardString glfwGetClipboardString;
 		internal static GetTime glfwGetTime;
+		internal static GetTimerFrequency glfwGetTimerFrequency;
+		internal static GetTimerValue glfwGetTimerValue;
 		internal static SetTime glfwSetTime;
 		internal static MakeContextCurrent glfwMakeContextCurrent;
 		internal static GetCurrentContext glfwGetCurrentContext;
@@ -265,6 +312,12 @@ namespace Pencil.Gaming {
 
 		internal static GetFramebufferSize glfwGetFramebufferSize;
 		internal static SetFramebufferSizeCallback glfwSetFramebufferSizeCallback;
+
+		internal static CreateWindowSurface glfwCreateWindowSurface;
+		internal static GetInstanceProcAddress glfwGetInstanceProcAddress;
+		internal static GetPhysicalDevicePresentationSupport glfwGetPhysicalDevicePresentationSupport;
+		internal static GetRequiredInstanceExtensions glfwGetRequiredInstanceExtensions;
+		internal static VulkanSupported glfwVulkanSupported;
 	}
 }
 

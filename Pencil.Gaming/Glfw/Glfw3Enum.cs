@@ -206,14 +206,18 @@ namespace Pencil.Gaming {
 		VersionUnavailable,
 		PlatformError,
 		FormatUnavailable,
+		NoWindowContext,
 	}
 
 	public enum WindowAttrib {
 		Focused = 0x20001,
 		Iconified,
 		Resizeable,
-        Visible,
-        Decorated
+		Visible,
+		Decorated,
+		AutoIconify,
+		Floating,
+		Maximized,
 	}
 
 	public enum WindowHint {
@@ -231,7 +235,8 @@ namespace Pencil.Gaming {
 		Stereo,
 		Samples,
 		SRGBCapable,
-        RefreshRate,
+		RefreshRate,
+		DoubleBuffer,
 		ClientAPI = 0x22001,
 		ContextVersionMajor,
 		ContextVersionMinor,
@@ -240,9 +245,12 @@ namespace Pencil.Gaming {
 		OpenGLForwardCompat,
 		OpenGLDebugContext,
 		OpenGLProfile,
+		ContextReleaseBehavior,
+		ContextNoError,
 	}
 
 	public enum OpenGLAPI {
+		NoAPI = 0,
 		OpenGLAPI = 0x30001,
 		OpenGLESAPI,
 	}
@@ -269,6 +277,12 @@ namespace Pencil.Gaming {
         CursorNormal = 0x00034001,
 		CursorHidden,
 		CursorCaptured,
+	}
+
+	public enum ContextReleaseBehavior {
+		Any = 0,
+		Flush = 0x00035001,
+		None,
 	}
 
 	public enum ConnectionState {

@@ -83,6 +83,19 @@ namespace Pencil.Gaming {
 	}
 
 	[StructLayout(LayoutKind.Explicit)]
+	public struct GlfwVulkanProcPtr {
+		private GlfwVulkanProcPtr(IntPtr ptr) {
+			inner_ptr = ptr;
+		}
+
+		[FieldOffsetAttribute(0)]
+		public IntPtr
+		    inner_ptr;
+
+		public readonly static GlfwVulkanProcPtr Null = new GlfwVulkanProcPtr(IntPtr.Zero);
+	}
+
+	[StructLayout(LayoutKind.Explicit)]
 	public struct GlfwWindowPtr {
 		private GlfwWindowPtr(IntPtr ptr) {
 			inner_ptr = ptr;
